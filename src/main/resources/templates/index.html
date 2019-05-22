@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <title>Registration Form</title>
+	<th:block th:include="fragments/header"></th:block>
+	<script type="text/javascript" src="js/main.js"></script>
 </head>
+
 <body>
-회원 목록 <a href="/register">회원등록</a> 
-<p th:text="${test}"></p>
-<p th:text="${egy}"></p>
+
+<th:block th:include="fragments/nav"></th:block>
+
+<div class="container" style="min-height: 500px">
+	<div class="starter-template">
+	    <h1>방문을 환영합니다.</h1>
+	</div>
+</div>
+
+<th:block th:include="fragments/footer"></th:block>
+
 </body>
 </html>
