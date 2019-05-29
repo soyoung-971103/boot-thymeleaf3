@@ -2,6 +2,7 @@ package idu.cs.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +20,10 @@ import idu.cs.exception.ResourceNotFoundException;
 import idu.cs.repository.UserRepository;
 
 @Controller
-public class HomeController {
+//@Component, @Service, @Repository, @Index
+//Spring Framework에게 클래스로 부터 작성된 객체는 Controller 역할을 함을 알려줌
+//Spring 이 클래스로 부터  Bean 객체를 생성해서 등록할 수 있음
+public class UserController {
 	@Autowired UserRepository userRepo; // Dependency Injection
 	@GetMapping("/")
 	public String home(Model model) {
@@ -27,13 +31,36 @@ public class HomeController {
 		model.addAttribute("egy", "유응구");
 		return "index";
 	}
-	@GetMapping("/user-login")
+	@GetMapping("/user-login-form")
 	public String getLoginForm(Model model) {
 		return "login";
 	}
-	@GetMapping("/user-reg-form")
+	@PostMapping("/login")
+	public String loginUser(@Valid User user, HttpSession session) {
+		System.out.println("login process : " + user.getUserId());
+		User sessionUser = userRepo.findByUserId(user.getUserId());
+		if(sessionUser == null) {
+			System.out.println("id error : ");
+			return "redirect:/user-login-form";
+		}
+		if(!sessionUser.getUserPw().equals(user.getUserPw())) {
+			System.out.println("pw error : ");
+			return "redirect:/user-login-form";	
+		}
+		System.out.println("로그인 성공 : ");
+		session.setAttribute("user", sessionUser);
+		return "redirect:/";
+	}
+	@GetMapping("/logout")
+	public String logoutUser(HttpSession session) {
+		session.removeAttribute("user");
+		//session.invalidate(); 세션에 있는 것 다 날려버림
+		return "redirect:/";
+	}
+	
+	@GetMapping("/user-register-form")
 	public String getRegForm(Model model) {
-		return "form";
+		return "register";
 	}
 	@GetMapping("/users")
 	public String getAllUser(Model model) {		
@@ -41,8 +68,11 @@ public class HomeController {
 		return "userlist";
 	}
 	@PostMapping("/users")
-	public String createUser(@Valid @RequestBody User user, Model model) {
-		userRepo.save(user);
+	public String createUser(@Valid User user, Model model) {
+		if(userRepo.save(user) != null)
+			System.out.println("Database 등록 성공");
+		else
+			System.out.println("Database 등록 실패");
 		model.addAttribute("users", userRepo.findAll());
 		return "redirect:/users";
 	}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Insert title here</title>
+	<th:block th:include="fragments/header"></th:block>
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<th:block th:include="fragments/nav"></th:block>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NAME</th>
+      <th scope="col">COMPANY</th>
+    </tr>
+  </thead>
+  <tbody>
+	<tr th:each="user : ${users}">
+		<td scope="row"><span th:text="${user.id}"></span></td>
+		<td>
+			<a th:href="@{/users/{id}(id=${user.id})}">
+				<span th:text="${user.name}"></span>
+			</a>
+		</td>
+		<td><span th:text="${user.company}"></span></td>
+	</tr>
+</tbody>
+</table>
+
+<th:block th:include="fragments/footer"></th:block>
+</body>
+</html>
