@@ -27,6 +27,10 @@ public class HomeController {
 		model.addAttribute("egy", "유응구");
 		return "index";
 	}
+	@GetMapping("/user-login")
+	public String getLoginForm(Model model) {
+		return "login";
+	}
 	@GetMapping("/user-reg-form")
 	public String getRegForm(Model model) {
 		return "form";
