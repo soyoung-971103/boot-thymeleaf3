@@ -57,7 +57,11 @@ public class UserController {
 		//session.invalidate(); 세션에 있는 것 다 날려버림
 		return "redirect:/";
 	}
-	
+	@GetMapping("/update")
+	public String infoUser(HttpSession session) {
+		
+		return "/userinfo";
+	}
 	@GetMapping("/user-register-form")
 	public String getRegForm(Model model) {
 		return "register";
