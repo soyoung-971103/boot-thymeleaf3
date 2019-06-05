@@ -74,6 +74,16 @@ public class UserController {
 		return "register";
 	}
 	
+	@GetMapping("/user-update-form")
+	public String getUpdateForm(Model model, HttpSession session) {
+		// 서비스를 통해 리파지터리로 부터 정보를 가져와야 하나 세션에 저장해두었으므로 정보를 활용
+		User user = (User) session.getAttribute("user");
+		//User sessionUser = userService.getUserById(user.getId());
+		//model.addAttribute("user", sessionUser);
+		model.addAttribute("user", user);
+		return "info";
+	}
+	
 	
 	@PostMapping("/users")
 	public String createUser(@Valid User user, Model model) {
@@ -110,16 +120,15 @@ public class UserController {
 		return "userlist";
 		//return ResponseEntity.ok().body(user);
 	}
+	*/
 	@PutMapping("/users/{id}") //@PatchMapping 수정한 부분만 수정되는 것
-	public String updateUser(@PathVariable(value = "id") Long userId, @Valid UserEntity userDetails, Model model) {
-		UserEntity user = userRepo.findById(userId).get();
-		//select, user는 DB로부터 읽어온 객체
-		user.setName(userDetails.getName()); //userDetails는 전송한 객체
-		user.setCompany(userDetails.getCompany());
-		userRepo.save(user);
+	public String updateUser(@PathVariable(value = "id") Long id, @Valid User user, Model model, HttpSession session) {
+		user.setId(userService.getUserById(id).getId());
+		userService.updateUser(user);	
+		session.setAttribute("user", user);
 		return "redirect:/users";
 	}
-	
+	/*
 	@DeleteMapping("/users/{id}")
 	public String deleteUser(@PathVariable(value = "id") Long userId, Model model) {
 		UserEntity user = userRepo.findById(userId).get();//select

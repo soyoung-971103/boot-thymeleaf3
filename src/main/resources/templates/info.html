@@ -18,7 +18,7 @@
                     <div class="breadcrumb_iner text-center">
                         <div class="breadcrumb_iner_item">
 							<h2>Elements</h2>
-                            <p>Home <span>//</span>회원 정보 확인</p>
+                            <p>Home <span>//</span>회원가입</p>
                         </div>
                     </div>
                 </div>
@@ -33,28 +33,24 @@
 					<div class="col-lg-2 col-md-2 mt-sm-30">					
 					</div>
 					<div class="col-lg-8 col-md-8 content-center">
-						<h3 class="mb-30">회원 정보 확인</h3>
-						 <!-- 
-						 <form th:action="@{'/users'}" th:method="put" id="register_form">
-						  -->
-						 <form action="/users" method="post" id="register_form">
+						<h3 class="mb-30">회원가입</h3>
+						  <form th:action="@{'/users/{id}'(id=${user.id})}" th:method="put" th:object="${user}">
 							<div class="mt-10">
-								<input type="text" name="userId" placeholder="사용자 아이디" onfocus="this.placeholder = '사용자아이디'" onblur="this.placeholder = 'First Name'" required="" class="single-input">
+								<input type="text" th:field="*{userId}" name="userId" placeholder="사용자 아이디" onfocus="this.placeholder = ''" onblur="this.placeholder = '사용자 아이디'" required="" class="single-input" ReadOnly>
 							</div>
 							<div class="mt-10">
-								<input type="password" name="userPw" placeholder="사용자 암호" onfocus="this.placeholder = '사용자암호'" onblur="this.placeholder = 'Last Name'" required="" class="single-input">
+								<input type="password" th:field="*{userPw}" name="userPw" placeholder="사용자 암호" onfocus="this.placeholder = ''" onblur="this.placeholder = '사용자 암호'" required="" class="single-input">
 							</div>
 							<div class="mt-10">
-								<input type="text" name="name" placeholder="사용자 이름" onfocus="this.placeholder = '사용자이름'" onblur="this.placeholder = 'First Name'" required="" class="single-input">
+								<input type="text" th:field="*{name}" name="name" placeholder="사용자 이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '사용자 이름'" required="" class="single-input">
 							</div>
 							<div class="mt-10">
-								<input type="text" name="company" placeholder="사용자 회사" onfocus="this.placeholder = '사용자회사'" onblur="this.placeholder = 'First Name'" required="" class="single-input">
+								<input type="text" th:field="*{company}" name="company" placeholder="사용자 회사" onfocus="this.placeholder = ''" onblur="this.placeholder = '사용자 회사'" required="" class="single-input">
 							</div>
 							<div class="form-group mt-3">
-								<button type="submit" class="button button-contactForm btn_4">
-									Sign-Up
-								</button>
-							</div>							
+				              <button type="submit" class="button button-contactForm btn_4">
+				              	회원가입</button>
+				            </div>
 						</form>
 					</div>
 					<div class="col-lg-2 col-md-2 mt-sm-30">					
@@ -65,10 +61,10 @@
 		</div>
 	</div>
 	
-    <!-- footer part start-->
+	<!-- footer part start-->
      <th:block th:include="fragments/footer"></th:block>
     <!-- footer part end-->
-
+    
     <!-- jquery plugins here-->
     <!-- jquery -->
     <script src="js/jquery-1.12.1.min.js"></script>
