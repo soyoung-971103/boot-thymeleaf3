@@ -1,4 +1,4 @@
-package idu.cs.domain;
+package idu.cs.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,11 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import idu.cs.domain.User;
+
 @Entity
 //Spring이 자동으로 보고 만들어
 //필요할 때 new User(); 라고 사용할 수 있도록 해줌
 @Table(name = "user_table")
-public class User {
+public class UserEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id; 
@@ -54,6 +56,23 @@ public class User {
 		this.company = company;
 	}
 	
+	public User buildDomain() {
+		User user = new User();
+		user.setId(id);	//primary key, auto increment, hibernate sequence
+		user.setUserId(userId); //login id unique
+		user.setUserPw(userPw);
+		user.setName(name);
+		user.setCompany(company);
+		return user;
+	}
+	
+	public void buildEntity(User user) {
+		id = user.getId();
+		userId = user.getUserId();
+		userPw = user.getUserPw();
+		name = user.getName();
+		company = user.getCompany();
+	}
 	
 	
 }
