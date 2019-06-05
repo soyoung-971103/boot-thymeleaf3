@@ -12,5 +12,5 @@ public interface UserService {
 	List<User> getUsersByPage(int index, int size); // 페이지로 조회
 	void saveUser(User user); // 생성
 	void updateUser(User user); // 수정
-	void deleteUser(long id); // 삭제
+	void deleteUser(User user); // 삭제
 }
